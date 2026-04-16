@@ -2,12 +2,125 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <meta
+      name="description"
+      content="Editable CV page with two layouts, local persistence, CSS animations, and PDF export."
+    />
+    <title>CV</title>
+    <link rel="icon" type="image/svg+xml" href="data/vitae-logo.svg" />
+    <script src="js/layout-bootstrap.js"></script>
+    <link rel="stylesheet" href="css/vitae-style.css" />
+    <script defer src="js/app-utils.js"></script>
+    <script defer src="js/cv-data.js"></script>
+    <script defer src="js/pdf-export.js"></script>
+    <script defer src="js/index.js"></script>
   </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="./js/main.js"></script>
+
+  <body class="homePage">
+    <main>
+      <article>
+        <div class="pageActions" role="toolbar" aria-label="Page actions">
+          <a class="actionButton" href="edit.html">Edit</a>
+          <button class="actionButton" type="button" id="savePdfButton">
+            Save as PDF
+          </button>
+
+          <label class="viewSwitch" for="view-switch">
+            <span class="viewSwitchLabel">v1</span>
+            <span class="switchControl">
+              <input
+                id="view-switch"
+                name="viewSwitch"
+                type="checkbox"
+                aria-label="Switch resume version"
+              />
+              <span class="switchSlider"></span>
+            </span>
+            <span class="viewSwitchLabel">v2</span>
+          </label>
+        </div>
+
+        <div class="flexCol bentoFlexbox">
+          <section class="flexRow introduction" aria-label="Introduction">
+            <img src="" alt="Portrait" class="square124 avatar" />
+
+            <div class="square124 flexCol nameBox">
+              <p class="textSmall fs10">Hello 👋🏻 I&rsquo;m</p>
+
+              <div class="flexCol yourInfo">
+                <h1 class="name"></h1>
+                <p class="textSmall fs12 role"></p>
+              </div>
+            </div>
+
+            <section
+              class="flexCol languagesBox"
+              aria-labelledby="languages-title"
+            >
+              <h2 class="title" id="languages-title">Languages</h2>
+
+              <div class="flexRow listLanguages">
+                <div class="flexCol nameLanguages"></div>
+                <div class="flexCol levelLanguages"></div>
+              </div>
+            </section>
+          </section>
+
+          <section class="flexRow experience" aria-label="Experience and tools">
+            <section
+              class="flexCol experienceBox"
+              aria-labelledby="experience-title"
+            >
+              <h2 class="title" id="experience-title">Experience</h2>
+
+              <div class="flexCol jobList"></div>
+            </section>
+
+            <aside class="flexCol toolsBox" aria-labelledby="tools-title">
+              <h2 class="title" id="tools-title">Tools</h2>
+
+              <div class="flexCol toolsFrame"></div>
+            </aside>
+          </section>
+
+          <section
+            class="flexRow summary"
+            aria-label="Education and extra information"
+          >
+            <section
+              class="flexCol educationBox"
+              aria-labelledby="education-title"
+            >
+              <h2 class="title" id="education-title">Education</h2>
+
+              <div class="educationList"></div>
+            </section>
+
+            <div class="flexCol extraBox">
+              <section
+                class="flexCol interestsBox"
+                aria-labelledby="interests-title"
+              >
+                <h2 class="title" id="interests-title">Interests</h2>
+
+                <div class="interestsContent"></div>
+              </section>
+
+              <section
+                class="flexCol contactBox"
+                aria-labelledby="contact-title"
+              >
+                <h2 class="title contact" id="contact-title">
+                  Let's chat! I'm ready to work on exciting projects!
+                </h2>
+
+                <address class="flexRow contactContent"></address>
+              </section>
+            </div>
+          </section>
+        </div>
+      </article>
+    </main>
   </body>
 </html>

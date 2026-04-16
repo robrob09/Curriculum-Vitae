@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Editor for the CV page with local persistence, layout switching, and inline content controls."
+    />
+    <title>CV Editor</title>
+    <link rel="icon" type="image/svg+xml" href="data/vitae-logo.svg" />
+    <script src="js/layout-bootstrap.js"></script>
+    <link rel="stylesheet" href="css/vitae-style.css" />
+    <script defer src="js/app-utils.js"></script>
+    <script defer src="js/cv-data.js"></script>
+    <script defer src="js/edit.js"></script>
+  </head>
+
+  <body class="editorPage">
+    <main>
+      <article>
+        <div class="pageActions" role="toolbar" aria-label="Editor actions">
+          <button class="actionButton" type="button" id="previewButton">
+            Preview
+          </button>
+          <button class="actionButton" type="button" id="saveButton">
+            Save
+          </button>
+          <button
+            class="actionButton actionButtonSecondary"
+            type="button"
+            id="resetButton"
+          >
+            Reset
+          </button>
+
+          <label class="viewSwitch" for="view-switch">
+            <span class="viewSwitchLabel">v1</span>
+            <span class="switchControl">
+              <input
+                id="view-switch"
+                name="viewSwitch"
+                type="checkbox"
+                aria-label="Switch resume version"
+              />
+              <span class="switchSlider"></span>
+            </span>
+            <span class="viewSwitchLabel">v2</span>
+          </label>
+        </div>
+
+        <div class="flexCol bentoFlexbox">
+          <section class="flexRow introduction" aria-label="Introduction">
+            <button
+              class="avatarEditButton"
+              type="button"
+              id="avatarButton"
+              aria-label="Upload avatar"
+            >
+              <img
+                src="data/avatar-default.svg"
+                alt="Portrait"
+                class="square124 avatar"
+              />
+            </button>
+            <input
+              id="avatarInput"
+              name="avatar"
+              type="file"
+              accept="image/*"
+              hidden
+            />
+
+            <div class="square124 flexCol nameBox">
+              <p class="textSmall fs10">Hello 👋🏻 I&rsquo;m</p>
+
+              <div class="flexCol yourInfo">
+                <label class="editorFieldLabel" for="nameInput">Name</label>
+                <input
+                  class="editorInput editorInputName"
+                  id="nameInput"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                />
+
+                <label class="editorFieldLabel" for="roleInput">Role</label>
+                <input
+                  class="editorInput editorInputRole"
+                  id="roleInput"
+                  name="role"
+                  type="text"
+                  autocomplete="organization-title"
+                />
+              </div>
+            </div>
+
+            <section
+              class="flexCol languagesBox"
+              aria-labelledby="languages-title"
+            >
+              <div class="editorSectionHeader">
+                <h2 class="title" id="languages-title">Languages</h2>
+                <button
+                  class="inlineActionButton"
+                  type="button"
+                  id="addLanguageButton"
+                >
+                  +
+                </button>
+              </div>
+
+              <div
+                class="flexCol editorList editorLanguagesList"
+                id="languagesEditorList"
+              ></div>
+            </section>
+          </section>
+
+          <section class="flexRow experience" aria-label="Experience and tools">
+            <section
+              class="flexCol experienceBox"
+              aria-labelledby="experience-title"
+            >
+              <div class="editorSectionHeader">
+                <h2 class="title" id="experience-title">Experience</h2>
+                <button
+                  class="inlineActionButton"
+                  type="button"
+                  id="addExperienceButton"
+                >
+                  +
+                </button>
+              </div>
+
+              <div class="flexCol editorList" id="experienceEditorList"></div>
+            </section>
+
+            <aside class="flexCol toolsBox" aria-labelledby="tools-title">
+              <div class="editorSectionHeader">
+                <h2 class="title" id="tools-title">Tools</h2>
+
+                <div class="inlineMenu" id="toolCategoryMenu">
+                  <button
+                    class="inlineActionButton"
+                    type="button"
+                    id="addToolGroupButton"
+                    aria-haspopup="menu"
+                    aria-expanded="false"
+                  >
+                    +
+                  </button>
+
+                  <div
+                    class="inlineMenuPopup"
+                    id="toolCategoryPopup"
+                    role="menu"
+                    hidden
+                  ></div>
+                </div>
+              </div>
+
+              <div class="flexCol editorToolsList" id="toolsEditorList"></div>
+            </aside>
+          </section>
+
+          <section
+            class="flexRow summary"
+            aria-label="Education and extra information"
+          >
+            <section
+              class="flexCol educationBox"
+              aria-labelledby="education-title"
+            >
+              <div class="editorSectionHeader">
+                <h2 class="title" id="education-title">Education</h2>
+                <button
+                  class="inlineActionButton"
+                  type="button"
+                  id="addEducationButton"
+                >
+                  +
+                </button>
+              </div>
+
+              <div
+                class="editorEducationList editorList"
+                id="educationEditorList"
+              ></div>
+            </section>
+
+            <div class="flexCol extraBox">
+              <section
+                class="flexCol interestsBox"
+                aria-labelledby="interests-title"
+              >
+                <div class="editorSectionHeader">
+                  <h2 class="title" id="interests-title">Interests</h2>
+                  <button
+                    class="inlineActionButton"
+                    type="button"
+                    id="addInterestButton"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <div class="editorTagList" id="interestsEditorList"></div>
+              </section>
+
+              <section
+                class="flexCol contactBox"
+                aria-labelledby="contact-title"
+              >
+                <h2 class="title contact" id="contact-title">
+                  Let's chat! I'm ready to work on exciting projects!
+                </h2>
+
+                <div class="flexCol editorContactFields">
+                  <label
+                    class="flexCol editorFieldGroup"
+                    for="contactEmailInput"
+                  >
+                    <span class="editorFieldLabel contactEditorLabel"
+                      >email:</span
+                    >
+                    <input
+                      class="editorInput contactEditorInput"
+                      id="contactEmailInput"
+                      name="email"
+                      type="email"
+                      inputmode="email"
+                      autocomplete="email"
+                    />
+                  </label>
+
+                  <label class="flexCol editorFieldGroup" for="contactTelInput">
+                    <span class="editorFieldLabel contactEditorLabel"
+                      >tel.:</span
+                    >
+                    <input
+                      class="editorInput contactEditorInput"
+                      id="contactTelInput"
+                      name="tel"
+                      type="tel"
+                      inputmode="tel"
+                      autocomplete="tel"
+                    />
+                  </label>
+                </div>
+              </section>
+            </div>
+          </section>
+        </div>
+      </article>
+    </main>
+
+    <div class="editorModalBackdrop" id="previewModal" hidden>
+      <div
+        class="editorModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="previewModalTitle"
+      >
+        <h2 class="editorModalTitle" id="previewModalTitle">Unsaved changes</h2>
+        <p class="editorModalText">
+          You have unsaved changes. Save them before opening preview?
+        </p>
+
+        <div class="editorModalActions">
+          <button
+            class="actionButton"
+            type="button"
+            id="modalSavePreviewButton"
+          >
+            Save
+          </button>
+          <button
+            class="actionButton actionButtonSecondary"
+            type="button"
+            id="modalDontSavePreviewButton"
+          >
+            Don&rsquo;t Save
+          </button>
+          <button
+            class="actionButton"
+            type="button"
+            id="modalCancelPreviewButton"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="editorModalBackdrop" id="resetModal" hidden>
+      <div
+        class="editorModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="resetModalTitle"
+      >
+        <h2 class="editorModalTitle" id="resetModalTitle">Reset changes</h2>
+        <p class="editorModalText">
+          Are you sure you want to reset all changes?
+        </p>
+
+        <div class="editorModalActions">
+          <button
+            class="actionButton actionButtonSecondary"
+            type="button"
+            id="modalConfirmResetButton"
+          >
+            Yes
+          </button>
+          <button
+            class="actionButton"
+            type="button"
+            id="modalCancelResetButton"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
